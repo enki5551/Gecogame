@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Gico · loading…</title>
+  <style>
+    :root{--bg:#0b0e1a;--accent:#3b6eff;color-scheme:dark}
+    html,body{height:100%}
+    body{margin:0;background:linear-gradient(180deg,#051025,#081028);display:flex;align-items:center;justify-content:center;font-family:sans-serif;color:#fff}
+    .loader{display:flex;flex-direction:column;align-items:center;gap:18px}
+    .spinner{width:84px;height:84px;border-radius:50%;border:8px solid rgba(255,255,255,0.06);border-top-color:var(--accent);animation:spin 1s linear infinite;box-shadow:0 6px 30px rgba(59,110,255,0.12)}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .brand{font-weight:800;font-size:20px;letter-spacing:2px}
+    .subtitle{opacity:0.75;font-size:13px}
+  </style>
+</head>
+<body>
+  <div class="loader">
+    <div class="spinner" aria-hidden></div>
+    <div class="brand">GICO</div>
+    <div class="subtitle">preparing your gaming world…</div>
+  </div>
+
+  <script>
+    // Simple loader / gate: if user is signed in, go to landing (gecoindex.html), otherwise go to auth page.
+    (function(){
+      try{
+        const user = JSON.parse(localStorage.getItem('gico_user'));
+        // simulate loading time
+        setTimeout(()=>{
+          if(user && user.username){
+            // open landing
+            location.href = './gecoindex.html';
+          } else {
+            // first-time flow -> open auth page
+            location.href = './auth.html';
+          }
+        }, 900);
+      }catch(e){
+        // fallback
+        setTimeout(()=>location.href='./auth.html',900);
+      }
+    })();
+  </script>
+</body>
+</html>
